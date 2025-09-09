@@ -32,13 +32,16 @@ app.use(rateLimiter);
 
 app.use("/api/notes", notesRoutes);
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../public')));
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-// Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+}
 
 connectDB().then(() => {
   app.listen(PORT, () => {

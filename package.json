@@ -7,7 +7,7 @@
     "build": "cd Notes_App/frontend && npm install && npm run build",
     "start": "node Notes_App/backend/src/server.js",
     "dev": "concurrently \"cd Notes_App/backend && npm run dev\" \"cd Notes_App/frontend && npm run dev\"",
-    "heroku-postbuild": "npm run build"
+    "render-build": "npm install && cd Notes_App/backend && npm install && cd ../frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,7 @@
     "concurrently": "^8.2.2"
   },
   "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

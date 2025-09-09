@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url';
+import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -11,7 +12,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../backend/public',
+    outDir: path.resolve(__dirname, '../frontend/dist'),
     emptyOutDir: true,
   },
   server: {
@@ -22,4 +23,5 @@ export default defineConfig({
       },
     },
   },
+  base: '/',
 })
