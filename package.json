@@ -1,0 +1,22 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "Full-stack Notes Application",
+  "scripts": {
+    "install:all": "npm install && cd Notes_App/backend && npm install && cd ../frontend && npm install",
+    "build": "cd Notes_App/frontend && npm install && npm run build",
+    "start": "node Notes_App/backend/src/server.js",
+    "dev": "concurrently \"cd Notes_App/backend && npm run dev\" \"cd Notes_App/frontend && npm run dev\"",
+    "heroku-postbuild": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}
