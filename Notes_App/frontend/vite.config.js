@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       sourcemap: isProduction ? false : 'inline',
-      minify: isProduction ? 'terser' : 'esbuild',
+      minify: false, // Disable minification to avoid terser dependency
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
