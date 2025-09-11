@@ -2,7 +2,14 @@ services:
   - type: web
     name: notes-app
     env: node
-    buildCommand: npm run render-build
+    buildCommand: |
+      npm install
+      cd Notes_App/frontend
+      npm install
+      npm install -g npm@latest
+      npm install --save-dev vite
+      cd ..
+      npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -12,9 +19,3 @@ services:
           name: notes-app-db
           property: connectionString
     plan: free
-    build:
-      commands:
-        - npm install
-        - cd Notes_App/frontend && npm install && npm run build
-    run:
-      command: node Notes_App/backend/src/server.js
