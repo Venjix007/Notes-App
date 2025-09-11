@@ -12,3 +12,9 @@ services:
           name: notes-app-db
           property: connectionString
     plan: free
+    build:
+      commands:
+        - npm install
+        - cd Notes_App/frontend && npm install && npm run build
+    run:
+      command: node Notes_App/backend/src/server.js
