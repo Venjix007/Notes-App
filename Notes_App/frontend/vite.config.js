@@ -4,24 +4,43 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  build: {
-    outDir: path.resolve(__dirname, '../frontend/dist'),
-    emptyOutDir: true,
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5001',
-        changeOrigin: true,
+export default defineConfig(({ command, mode }) => {
+  const isProduction = mode === 'production';
+  
+  return {
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
+    build: {
+      outDir: path.resolve(__dirname, 'dist'),
+      emptyOutDir: true,
+      sourcemap: isProduction ? false : 'inline',
+      minify: isProduction ? 'terser' : 'esbuild',
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom', 'axios'],
+          },
+        },
       },
     },
-  },
-  base: '/',
-})
+    server: {
+      proxy: isProduction ? undefined : {
+        '/api': {
+          target: 'http://localhost:5001',
+          changeOrigin: true,
+        },
+      },
+    },
+    // Use relative paths in production for deployment to subdirectories if needed
+    base: isProduction ? './' : '/',
+    // Environment variables configuration
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || mode),
+    },
+  };
+});

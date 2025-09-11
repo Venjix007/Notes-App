@@ -34,14 +34,43 @@ app.use("/api/notes", notesRoutes);
 
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  // Try multiple possible paths for static files
+  const possibleStaticPaths = [
+    path.join(__dirname, '../public'),  // Render deployment
+    path.join(__dirname, '../../public'), // Local build
+    path.join(__dirname, '../../frontend/dist'), // Direct frontend build
+    path.join(__dirname, '../frontend/dist'),
+    path.join(process.cwd(), 'frontend/dist'),
+    path.join(process.cwd(), '../frontend/dist')
+  ];
 
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
+  let staticServed = false;
+  
+  for (const staticPath of possibleStaticPaths) {
+    try {
+      if (require('fs').existsSync(staticPath)) {
+        console.log(`Serving static files from: ${staticPath}`);
+        app.use(express.static(staticPath));
+        staticServed = true;
+        
+        // Handle React routing, return all requests to React app
+        app.get('*', (req, res) => {
+          res.sendFile(path.join(staticPath, 'index.html'));
+        });
+        
+        break;
+      }
+    } catch (error) {
+      console.warn(`Error accessing path ${staticPath}:`, error.message);
+      continue;
+    }
+  }
+  
+  if (!staticServed) {
+    console.error('Could not find frontend build directory. Tried:', possibleStaticPaths);
+  }
 }
+
 
 connectDB().then(() => {
   app.listen(PORT, () => {

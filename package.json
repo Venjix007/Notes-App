@@ -2,12 +2,13 @@
   "name": "notes-app",
   "version": "1.0.0",
   "description": "Full-stack Notes Application",
+  "private": true,
   "scripts": {
     "install:all": "npm install && cd Notes_App/backend && npm install --legacy-peer-deps && cd ../frontend && npm install --legacy-peer-deps",
-    "build": "cd Notes_App/frontend && npm install --legacy-peer-deps && npm run build",
+    "build": "cd Notes_App/frontend && npm install --legacy-peer-deps && npm run build && cd ../../ && mkdir -p Notes_App/backend/public && cp -r Notes_App/frontend/dist/* Notes_App/backend/public/",
     "start": "node Notes_App/backend/src/server.js",
     "dev": "concurrently \"cd Notes_App/backend && npm run dev\" \"cd Notes_App/frontend && npm run dev\"",
-    "render-build": "npm install && cd Notes_App/backend && npm install --legacy-peer-deps && cd ../frontend && npm install --legacy-peer-deps && npm run build"
+    "render-build": "npm install && cd Notes_App/backend && npm install --legacy-peer-deps --production=false && cd ../frontend && npm install --legacy-peer-deps && npm run build && cd ../../ && mkdir -p Notes_App/backend/public && cp -r Notes_App/frontend/dist/* Notes_App/backend/public/"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +17,12 @@
     "concurrently": "^8.2.2"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
-  }
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "Notes_App/frontend/node_modules",
+    "Notes_App/backend/node_modules"
+  ]
 }
