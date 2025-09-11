@@ -4,10 +4,10 @@
   "description": "Full-stack Notes Application",
   "scripts": {
     "install:all": "npm install && cd Notes_App/backend && npm install && cd ../frontend && npm install",
-    "build": "cd Notes_App/frontend && npm install && npm install vite && npm run build",
+    "build": "cd Notes_App/frontend && npm install && npm run build",
     "start": "node Notes_App/backend/src/server.js",
     "dev": "concurrently \"cd Notes_App/backend && npm run dev\" \"cd Notes_App/frontend && npm run dev\"",
-    "render-build": "npm install && cd Notes_App/frontend && npm install && cd ../.. && npm run build"
+    "render-build": "npm install && cd Notes_App/frontend && npm install --legacy-peer-deps && npm run build"
   },
   "keywords": [],
   "author": "",

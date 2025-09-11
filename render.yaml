@@ -5,12 +5,9 @@ services:
     buildCommand: |
       npm install
       cd Notes_App/frontend
-      npm install
-      npm install -g npm@latest
-      npm install --save-dev vite
-      cd ..
+      npm install --legacy-peer-deps
       npm run build
-    startCommand: npm start
+    startCommand: cd Notes_App/backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
