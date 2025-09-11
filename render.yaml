@@ -11,9 +11,9 @@ services:
       cd Notes_App/frontend
       npm install --legacy-peer-deps
       
-      # Install backend dependencies
+      # Install backend dependencies (dev + prod)
       cd ../backend
-      npm install --legacy-peer-deps
+      npm install --legacy-peer-deps --production=false
       
       # Build frontend
       cd ../frontend
@@ -23,6 +23,10 @@ services:
       cd ..
       mkdir -p backend/public
       cp -r frontend/dist/* backend/public/
+      
+      # Reinstall backend dependencies (production only)
+      cd backend
+      npm install --legacy-peer-deps
     
     startCommand: cd Notes_App/backend && node src/server.js
     
