@@ -7,18 +7,22 @@ services:
       # Install root dependencies
       npm install
       
-      # Install frontend dependencies and build
+      # Install frontend dependencies
       cd Notes_App/frontend
       npm install --legacy-peer-deps
-      npm run build
       
       # Install backend dependencies
       cd ../backend
-      npm install --legacy-peer-deps --production
+      npm install --legacy-peer-deps
       
-      # Copy frontend build to backend public directory
-      mkdir -p public
-      cp -r ../frontend/dist/* public/
+      # Build frontend
+      cd ../frontend
+      npm run build
+      
+      # Create public directory and copy frontend build
+      cd ..
+      mkdir -p backend/public
+      cp -r frontend/dist/* backend/public/
     
     startCommand: cd Notes_App/backend && node src/server.js
     

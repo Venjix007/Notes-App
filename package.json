@@ -8,7 +8,7 @@
     "build": "cd Notes_App/frontend && npm install --legacy-peer-deps && npm run build && cd ../../ && mkdir -p Notes_App/backend/public && cp -r Notes_App/frontend/dist/* Notes_App/backend/public/",
     "start": "node Notes_App/backend/src/server.js",
     "dev": "concurrently \"cd Notes_App/backend && npm run dev\" \"cd Notes_App/frontend && npm run dev\"",
-    "render-build": "npm install && cd Notes_App/backend && npm install --legacy-peer-deps --production=false && cd ../frontend && npm install --legacy-peer-deps && npm run build && cd ../../ && mkdir -p Notes_App/backend/public && cp -r Notes_App/frontend/dist/* Notes_App/backend/public/"
+    "render-build": "npm install && cd Notes_App/backend && npm install --legacy-peer-deps && cd ../frontend && npm install --legacy-peer-deps && npm run build && cd ../../ && mkdir -p Notes_App/backend/public && cp -r Notes_App/frontend/dist/* Notes_App/backend/public/"
   },
   "keywords": [],
   "author": "",
